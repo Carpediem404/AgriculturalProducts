@@ -1,0 +1,50 @@
+{
+  "name": "vite",
+  "version": "0.0.0",
+  "scripts": {
+    "lint": "eslint --ext .tsx,.ts,.js,.vue src",
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@vueuse/core": "^4.0.4",
+    "axios": "^0.21.1",
+    "dayjs": "^1.9.7",
+    "echarts": "^5.0.1",
+    "element-plus": "^v1.0.2-beta.28",
+    "fabric": "^4.3.1",
+    "gojs": "^2.1.34",
+    "vue": "^3.0.5",
+    "vue-router": "^4.0.3",
+    "vuex": "^4.0.0-rc.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "echo 'husky' && npm run lint"
+    }
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/runtime": "^7.12.5",
+    "@rollup/plugin-alias": "^3.1.1",
+    "@rollup/plugin-babel": "^5.2.2",
+    "@types/axios": "^0.14.0",
+    "@types/fabric": "^4.2.2",
+    "@typescript-eslint/eslint-plugin": "^4.9.0",
+    "@typescript-eslint/parser": "^4.9.1",
+    "@vitejs/plugin-vue": "^1.0.4",
+    "@vue/compiler-sfc": "^3.0.5",
+    "@vuedx/typescript-plugin-vue": "^0.4.1",
+    "babel-plugin-component": "^1.1.1",
+    "eslint": "^7.15.0",
+    "eslint-config-prettier": "^7.0.0",
+    "eslint-plugin-vue": "^7.2.0",
+    "husky": "^4.3.5",
+    "postcss": "8.2.2",
+    "rollup-plugin-postcss": "4.0.0",
+    "sass": "^1.30.0",
+    "typescript": "^4.1.2",
+    "vite": "v2.0.0-beta.62",
+    "vite-babel-plugin": "0.0.2"
+  }
+}

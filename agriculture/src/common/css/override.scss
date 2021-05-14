@@ -1,0 +1,380 @@
+/* 组件样式重写覆盖 */
+
+@import './constant.scss';
+#app {
+    // form
+    .el-form {
+        &-item {
+            &__label {
+                color: rgba(255, 255, 255, 0.65);
+                font-size: 16px;
+                font-weight: 500;
+            }
+        }
+    }
+    // 分页
+    .el-pagination {
+        display: flex;
+        align-items: center;
+        background: inherit;
+        .el-pager li {
+            background-color: inherit;
+            height: 18px;
+            border-radius: 2px;
+            min-width: 18px;
+            line-height: 18px;
+            color: rgba(255, 255, 255, 0.65);
+            &.active {
+                background-color: $primaryColor;
+                color: #fff;
+            }
+        }
+        .btn-prev {
+            width: 18px;
+            height: 18px;
+            background: inherit;
+            color: rgba(255, 255, 255, 0.75);
+            &:disabled {
+                color: rgba(255, 255, 255, 0.25);
+            }
+        }
+        .btn-next {
+            width: 18px;
+            height: 18px;
+            background: inherit;
+            color: rgba(255, 255, 255, 0.75);
+            &:disabled {
+                color: rgba(255, 255, 255, 0.25);
+            }
+        }
+        .el-input__inner {
+            // width: 100px;
+            height: 22px;
+            // background: #07254a;
+            border-radius: 2px;
+            border: none;
+        }
+    }
+    //弹窗
+    .el-dialog {
+        background-color: RGBA(20, 29, 48, 0.9);
+        // .el-dialog__body {
+        //   padding: 0;
+        // }
+        .el-dialog__header {
+            height: 56px;
+            background: RGBA(16, 48, 89, 1);
+            line-height: 56px;
+            padding: 0 20px;
+            border: 1px solid #2f3d6b;
+        }
+        .el-dialog__title {
+            color: #f0f1ff;
+        }
+        .el-dialog__footer {
+            text-align: center;
+            .el-button--default {
+                width: 88px;
+                height: 32px;
+                padding: 0;
+                color: rgba(255, 255, 255, 0.65);
+                line-height: 32px;
+                border-radius: 2px;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                // background: inherit;
+            }
+            .el-button--primary {
+                width: 88px;
+                height: 32px;
+                padding: 0;
+                line-height: 32px;
+                border-radius: 2px;
+                background: $primaryColor;
+            }
+        }
+    }
+    // 选择器
+    .el-select {
+        // background: #07254a;
+        height: 32px;
+        .el-input {
+            .el-input__inner {
+                // background: #07254a;
+                border-radius: 4px;
+                height: 32px;
+                // border: 1px solid #00dbff;
+                font-size: 14px;
+                font-weight: 400;
+                color: #f0f1ff;
+            }
+            .el-input__suffix {
+                height: 32px;
+            }
+            .el-select__caret {
+                line-height: 32px;
+            }
+        }
+    }
+    // 按钮
+    .el-button {
+        // width: 115px;
+        height: 32px;
+        min-width: 65px;
+        border-radius: 2px;
+        padding: 0 20px;
+        border: none;
+        &--default {
+            background: inherit;
+            color: rgba(255, 255, 255, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        &.is-disabled {
+            background: #ccc;
+        }
+        &--primary {
+            background: $primaryColor;
+            border-radius: 2px;
+        }
+    }
+    // 输入框
+    .el-input__inner {
+        height: 32px;
+        // width: 190px;
+        background: #1f1f1f;
+        box-shadow: 0px 12px 48px 16px rgba(0, 0, 0, 0.12), 0px 9px 28px 0px rgba(0, 0, 0, 0.2), 0px 6px 16px -8px rgba(0, 0, 0, 0.32);
+        color: rgba(255, 255, 255, 0.65);
+        border-radius: 4px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        &::placeholder {
+            font-size: 14px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.65);
+            line-height: 22px;
+        }
+    }
+    // 数字输入框
+    .el-input-number {
+        // height: 32px;
+        width: 180px;
+        height: 32px;
+        line-height: 32px;
+        &__decrease {
+            bottom: 0px;
+            background: rgba(31, 31, 31, 1);
+            width: 22px;
+            line-height: 15px;
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            // border-top: 1px solid rgba(255, 255, 255, 0.2);
+            // border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.45);
+            &.is-disabled {
+                color: #aaa;
+            }
+        }
+        &__increase {
+            color: rgba(255, 255, 255, 0.45);
+            // top: 0px;
+            width: 22px;
+            &.is-disabled {
+                color: #777;
+            }
+            background: rgba(31, 31, 31, 1);
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            // border: none;
+            line-height: 15px;
+        }
+    }
+    // radio
+    .el-radio {
+        display: block;
+        &__inner {
+            border: 1px solid #90afcf;
+            background-color: inherit;
+            &:after {
+                background-color: #90afcf;
+            }
+        }
+        &__label {
+            line-height: 40px;
+        }
+    }
+    // tab分栏
+    .el-tabs {
+        &__nav-scroll {
+            padding-left: 60px;
+        }
+        &__nav-wrap {
+            &:after {
+                background-color: $bgColor;
+            }
+        }
+        &__item {
+            font-size: 16px;
+            font-weight: 500;
+            color: #007bff;
+            // line-height: 22px;
+            background: linear-gradient(180deg, #00dbff 0%, #0072fc 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    }
+    .el-textarea__inner {
+        background: inherit;
+        border-radius: 2px;
+        color: #90afcf;
+        font-family: inherit;
+        border: 1px solid #2f3d6b;
+        &::placeholder {
+            font-size: 14px;
+            font-weight: 400;
+            color: #384a83;
+            line-height: 22px;
+        }
+    }
+    .el-switch {
+        .el-switch__label {
+            color: #ccc;
+            &.is-active {
+                color: $primaryColor;
+            }
+            &--right {
+                color: #fff;
+            }
+            &--left {
+                color: #fff;
+            }
+        }
+    }
+    .el-table {
+        width: 100%;
+        .el-table__header-wrapper table,
+        .el-table__body-wrapper table {
+            width: 100% !important;
+        }
+        .el-table__body-wrapper {
+            overflow: visible;
+        }
+        .el-table__body,
+        .el-table__footer,
+        .el-table__header {
+            table-layout: auto;
+        }
+        margin-top: 20px;
+        background-color: $contentColor;
+        .cell {
+            overflow: visible;
+        }
+        border-color:rgba(255, 255, 255, 0.2);
+        &::before {
+            height: 0px;
+        }
+        &::after {
+            width: 0px;
+        }
+        th {
+            // background-color: #11315c;
+            background-color: $contentColor;
+            border-color: rgba(255, 255, 255, 0.2);
+            font-size: 14px;
+            // color: #467ab2;
+            color: rgba(255, 255, 255, 0.65);
+            .cell {
+                text-align: center;
+                // padding-left: 39px;
+            }
+        }
+        th.is-leaf {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        td {
+            background-color: $contentColor;
+            border-color: rgba(255, 255, 255, 0.2);
+            // color: #90afcf;
+            color: rgba(255, 255, 255, 0.65);
+        }
+        thead {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+    }
+    // 消息弹窗
+}
+
+.el-select__popper {
+    background-color: rgba(31, 31, 31, 0.9) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    .el-popper__arrow {
+        &:before {
+            display: none;
+        }
+    }
+    .el-select-dropdown {
+        // width: 190px;
+        margin-top: -10px;
+        // height: 222px;
+        &__empty {
+            background-color: #1f1f1f;
+        }
+        box-shadow: 0px 12px 48px 16px rgba(0, 0, 0, 0.12),
+        0px 9px 28px 0px rgba(0, 0, 0, 0.2),
+        0px 6px 16px -8px rgba(0, 0, 0, 0.32);
+        .el-scrollbar {
+            .el-select-dropdown__item {
+                background: rgba(31, 31, 31, 0.9);
+                color: #f0f1ff;
+                &:hover {
+                    opacity: 1;
+                    // color: #212b4a;
+                    color: rgba(23, 125, 220, 1);
+                    background: #111d2c;
+                }
+            }
+        }
+    }
+}
+
+.el-message-box__wrapper {
+    .el-message-box {
+        .el-message-box__header {
+            // height:;
+            display: none;
+        }
+        //     .el-message-box__status::before {
+        //     padding-left: 1px;
+        // }
+        .el-message-box__message {
+            height: 24px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #f0f1ff;
+            line-height: 24px;
+        }
+        .el-message-box__btns {
+            margin-top: 36px;
+            .el-button {
+                &--default {
+                    width: 88px;
+                    height: 32px;
+                    border-radius: 2px;
+                    border: 1px solid #3e6ea2;
+                    background: inherit;
+                    color: #90afcf;
+                }
+                &--primary {
+                    background: #007bff;
+                    color: #fff;
+                }
+            }
+        }
+        width: 433px;
+        height: 222px;
+        padding: 32px;
+        background: #161f34;
+        opacity: 0.9;
+        border: 1px solid #2f3d6b;
+    }
+}
+
+// 外层的选择器

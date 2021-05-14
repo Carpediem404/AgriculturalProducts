@@ -1,0 +1,18 @@
+/*文本格式化，超出范围，显示省略号*/
+@mixin textOverflow($width: 100%, $display: block) {
+  width: $width;
+  display: $display;
+  white-space: nowrap;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+// 多行文本省略号
+@mixin ellipsis($lineNum: 1) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-line-clamp: $lineNum;
+  -webkit-box-orient: vertical;
+}

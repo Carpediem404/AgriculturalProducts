@@ -1,0 +1,175 @@
+@import './mixin.scss';
+@import './reset.scss';
+@import './override.scss';
+@import './animation.scss';
+@import './constant.scss';
+// @import '//at.alicdn.com/t/font_2282304_28ohznpm0fi.css'; // 文本省略
+.icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+}
+
+.ellipsis-1 {
+    @include ellipsis(1);
+}
+
+.ellipsis-2 {
+    @include ellipsis(2);
+}
+
+.ellipsis-3 {
+    @include ellipsis(3);
+}
+
+.ellipsis-4 {
+    @include ellipsis(4);
+}
+
+// 按钮样式
+.button {
+    background: #007bff;
+    border-radius: 4px;
+    padding: 0 6px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #ffffff;
+    line-height: 32px;
+    min-width: 80px;
+    text-align: center;
+    cursor: pointer;
+}
+
+// flex常用
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+html,
+body {
+    height: 100%;
+    min-height: 100vh;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    /*-webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;*/
+    box-sizing: inherit;
+}
+
+#app {
+    // padding-top: 70px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    // font-family: Avenir, Helvetica, Arial, sans-serif;
+    font-family: 'Microsoft YaHei', '黑体', '宋体', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: $bgColor;
+    background-image: url("./assets/imgs/bg.jpg");
+    background-size: cover;
+}
+
+// 副标题样式
+.subtitle {
+    border-left: 8px solid $primaryColor;
+    padding-left: 18px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    line-height: 24px;
+}
+
+//总数
+.total {
+    color: rgba(0, 219, 255, 0.48);
+    font-size: 18px;
+    margin-left: 16px;
+}
+
+//已测数量
+.test-count {
+    font-size: 40px;
+    font-weight: 600;
+    color: #00dbff;
+}
+
+//分数样式
+.num {
+    &__finish {
+        color: #007bff;
+        font-size: 24px;
+    }
+    &__sum {
+        font-size: 14px;
+        color: #f0f1ff;
+        margin-left: 8px;
+    }
+}
+
+// 滚动条样式
+*::-webkit-scrollbar {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background-color: inherit;
+    /**/
+}
+
+*::-webkit-scrollbar-track {
+    background: inherit;
+    border-radius: 2px;
+}
+
+*::-webkit-scrollbar-thumb {
+    // background: #212b4a;
+    border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: #333;
+}
+
+*::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+.global-tooltip {
+    position: relative;
+    &:hover {
+        &:before {
+            content: attr(data-tip);
+            padding: 10px;
+            white-space: nowrap;
+            background: rgba(0, 123, 255, 0.6);
+            border-radius: 4px;
+            box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
+            bottom: calc(100% + 10px);
+            color: #fff;
+            right: 50%;
+            transform: translateX(50%);
+            position: absolute;
+        }
+        &:after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid rgba(0, 123, 255, 0.6);
+            bottom: calc(100% + 5px);
+            right: 50%;
+            transform: translateX(50%);
+            position: absolute;
+        }
+    }
+}
