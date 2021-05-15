@@ -9,7 +9,7 @@
         <router-link class="h-header__navItem" to="/agriculture-manage"><SvgIcon svg-name="agriculture3" :width="16" :height="16" style="margin-right: 8px"></SvgIcon>农产品信息管理</router-link>
 
         <router-link class="h-header__navItem" to="/device-manage"><SvgIcon svg-name="renyuanguanli2" :width="20" :height="20" style="margin-right: 8px"></SvgIcon>设备管理</router-link>
-        <router-link class="h-header__navItem" to="/plants-manage"><SvgIcon svg-name="Plant-Care1" :width="16" :height="16" style="margin-right: 8px"></SvgIcon>监测虫情</router-link>
+        <router-link class="h-header__navItem" to="/insect-detection"><SvgIcon svg-name="Plant-Care1" :width="16" :height="16" style="margin-right: 8px"></SvgIcon>监测虫情</router-link>
       </div>
       <!-- <div class="h-header__right">
         <div class="h-header__group">
