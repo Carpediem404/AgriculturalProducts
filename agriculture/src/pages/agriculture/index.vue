@@ -17,7 +17,7 @@
         <el-table-column label="大棚ID" prop="fid"  align="center"> </el-table-column>
         <el-table-column label="农作物名称" prop="cname" width="180"  align="center"> 
            <template #default="scope">
-            {{scope.row.fid}}
+            {{scope.row.cname}}
           </template>
         </el-table-column>
         <!-- <el-table-column label="状态" prop="status"> </el-table-column> -->
@@ -29,24 +29,23 @@
       </el-table>
     </div>
     <div class="divide-line"></div>
-    <div class="charts-block__name">指标数据</div>
-    <div class="agriculture__charts">
-      <div class="chart-block">
-        <div class="charts-name">空气/光照仪表盘</div>
-        <div ref="weather" style="width: 500px; height: 500px"></div>
+    
+    
+   <div class="device-detail">
+      <div class="data-statistics">
+        <div class="data-statistics__name">数据统计</div>
+        
+        
+        <div class="data-statistics__charts">
+        
+          <div id="column-chart" style="width: 100%; height: 400px"></div>
+        </div>
       </div>
-      <div class="chart-block">
-        <div class="charts-name">土壤/CO2仪表盘</div>
-        <div ref="CO2" style="width: 500px; height: 500px"></div>
-      </div>
-      <div class="chart-block">
-        <div class="charts-name">仪表盘</div>
 
-        <div ref="temperature" style="width: 500px; height: 500px"></div>
-      </div>
+      <div class="device-detail__name"></div>
     </div>
-    <!-- <div ref="weather" style="width: 500px; height: 500px"></div>
-    <div ref="CO2" style="width: 500px; height: 500px"></div> -->
+  
+
   </div>
 </template>
 
@@ -62,22 +61,7 @@ export default {
   data() {
     return {
       isOpen: false,
-      tableData: [
-        {
-          id: '',
-          username: '',
-          area: '',
-          status: '',
-          startTime: '',
-          air_temperature: '',
-          air_humidity: '',
-          soil_temperature: '',
-          soil_humidity: '',
-          co2: '',
-         illuminance: ""
-        },
-       
-      ],
+    
       plantList:[{
         id:0,
         fid:0,
@@ -89,15 +73,24 @@ time: 3,
 total: 0.108,
         
       }],
+       source: [
+            ['product', '2015', '2016', '2017'],
+            ['Matcha Latte', 43.3, 85.8, 93.7],
+            ['Milk Tea', 83.1, 73.4, 55.1],
+            ['Cheese Cocoa', 86.4, 65.2, 82.5],
+            ['Walnut Brownie', 72.4, 53.9, 39.1],
+          ],
     };
   },
   mounted() {
     
     this.getPlantInfo();
-    this.drawWeather();
+    
+
+    // this.drawWeather();
   
-    this.drawCO2();
-    this.drawTemperature();
+    // this.drawCO2();
+    // this.drawTemperature();
   },
   methods: {
     getPlantInfo() {
@@ -105,11 +98,17 @@ total: 0.108,
         console.log('plantListres',res);
         this.plantList = res.data.extend.pageInfo.list;
         console.log('plantList',this.plantList)
-      
+        this.sourceList=this.plantList.map((item)=>{
+              
+              return [item.cname,item.time,item.quantity,item.cprofit,item.total]
+        })
+        this.sourceList.unshift(['农作物名称','种植时长','种植数量','单株利润','总利润'])
+        console.log('sourceList',this.sourceList)
+        this.drawColumn();
       });
     },
   
-      time(time = +new Date()) {
+    time(time = +new Date()) {
       var date = new Date(time + 8 * 3600 * 1000); // 增加8小时
       return (date.toJSON() || "").slice(0, 19).replace("T", " ");
     },
@@ -418,6 +417,54 @@ total: 0.108,
       }, 2000);
       option && myChart.setOption(option);
     },
+       drawColumn() {
+      //   var chart = echarts.init(this.$refs['columnChart']);
+      var chart = echarts.init(document.getElementById('column-chart'));
+      let option = {
+        legend: { textStyle: { color: 'rgba(255, 255, 255, 0.65)' } },
+        tooltip: {},
+        dataset: {
+          source: this.sourceList
+        },
+        xAxis: {
+          type: 'category',
+          axisLine: {
+            lineStyle: {
+              color: 'rgba(255, 255, 255, 0.65)',
+            },
+          },
+        },
+        yAxis: {
+          axisLine: {
+            lineStyle: {
+              color: 'rgba(255, 255, 255, 0.65)',
+            },
+          },
+        },
+
+        series: [
+          {
+            type: 'bar',
+            label: {
+              normal: {
+                show: true,
+                position: 'top',
+
+                textStyle: {
+                  fontSize: 16,
+                  color: '#B0CEFC',
+                },
+              },
+            },
+          },
+          { type: 'bar' },
+          { type: 'bar' },
+              { type: 'bar' },
+        ],
+      };
+
+      option && chart.setOption(option);
+    },
   },
 };
 </script>
@@ -458,6 +505,17 @@ total: 0.108,
       color: rgba(255, 255, 255, 0.65);
       font-size: 18px;
       padding-bottom: 20px;
+    }
+  }
+   .data-statistics {
+    margin: 40px 0;
+    &__name {
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 16px;
+      font-weight: 500;
+    }
+    &__charts {
+      margin-top: 20px;
     }
   }
 }

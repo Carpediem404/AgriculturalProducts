@@ -26,22 +26,26 @@
     </div>
     <div class="device-manage__table">
       <el-table :data="deviceList" border style="width: 100%">
-        <el-table-column prop="name" label="设备名称" width="180"> </el-table-column>
-        <el-table-column prop="device_model" label="设备型号" width="180"> </el-table-column>
-        <el-table-column prop="status" label="使用状态"> </el-table-column>
-        <el-table-column prop="stock" label="设备库存"> </el-table-column>
-        <el-table-column prop="admin" label="设备管理员"> </el-table-column>
+        <el-table-column prop="name" label="设备名称" width="180" align="center"> </el-table-column>
+        <el-table-column prop="device_model" label="设备型号" width="180" align="center"> </el-table-column>
+        <el-table-column prop="status" label="使用状态" align="center"> 
+          <template #default="scope">
+            <div :class="{light_height:scope.row.status==='使用中'}">
+            {{scope.row.status}}
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="stock" label="设备库存" align="center"> </el-table-column>
+        <el-table-column prop="admin" label="设备管理员" align="center"> </el-table-column>
       </el-table>
     </div>
     <div class="device-detail">
       <div class="data-statistics">
         <div class="data-statistics__name">数据统计</div>
         <div class="divide-line"></div>
-        <div class="data-statistics__charts">
-          <!-- <ColumnChart :xDatas="adv_datas" :yDatas="defense_acc"></ColumnChart> -->
+        <!-- <div class="data-statistics__charts">
           <div id="calendar-pie" style="width: 100%; height: 400px"></div>
-          <!-- <div id="column-chart" style="width: 400px; height: 400px"></div> -->
-        </div>
+        </div> -->
         <div class="data-statistics__charts">
           <!-- <ColumnChart :xDatas="adv_datas" :yDatas="defense_acc"></ColumnChart> -->
           <!-- <div id="calendar-pie" style="width: 400px; height: 400px"></div> -->
@@ -58,7 +62,7 @@
 // import ColumnChart from '@/components/ColumnChart.vue';
 // import CalendarPie from '@/components/CalendarPie.vue';
 import * as echarts from 'echarts';
-
+import axios from 'axios';
 export default {
   name: 'Decive',
   component: {},
@@ -107,10 +111,20 @@ export default {
     };
   },
   mounted() {
-    this.drawCalendar();
+    this.getDeviceList();
+    // this.drawCalendar();
     this.drawColumn();
   },
   methods: {
+    getDeviceList(){
+      axios.get('webdapeng_war/devices').then((res)=>{
+
+        console.log('device_res',res)
+        this.deviceList=res?.data?.extend?.devices||{};
+        console.log('deviceList',this.deviceList)
+
+      })
+    },
     getVirtulData() {
       var date = +echarts.number.parseDate('2017-02-01');
       var end = +echarts.number.parseDate('2017-03-01');
@@ -314,6 +328,21 @@ export default {
     width: 100%;
     background-color: rgba(255, 255, 255, 0.2);
     margin: 20px 0;
+  }
+  .light_height {
+  // background-color: inherit;
+  background-color: rgba(224, 32, 32, 0.1);
+
+  color: #e02020;
+}
+.el-table .cell {
+    line-height: 48px;
+    height: 48px;
+    padding: 0;
+  }
+  .el-table td,
+  .el-table th {
+    padding: 0;
   }
 }
 </style>
