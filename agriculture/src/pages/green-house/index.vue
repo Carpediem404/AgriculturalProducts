@@ -1,6 +1,36 @@
 <template>
   <div class="green-house">
     <div class="environment">
+
+       <div class="agriculture-table">
+      <el-table :data="tableData" style="width: 1000px">
+        <!-- <el-table-column type="expand">
+          <template #default="scope">
+            <div class="expand-block__title">温度仪表盘</div>
+           
+          </template>
+        </el-table-column> -->
+        <el-table-column label="大棚ID" prop="id"  align="center">
+          <template #default="scope">
+            {{scope.row.id}}
+          </template>
+           </el-table-column>
+        <el-table-column label="负责人" prop="username"  align="center"> </el-table-column>
+        <el-table-column label="时间" prop="startTime" width="180"  align="center"> 
+           <template #default="scope">
+            {{time(scope.row.startTime)}}
+          </template>
+        </el-table-column>
+        <!-- <el-table-column label="状态" prop="status"> </el-table-column> -->
+        <el-table-column label="面积" prop="area"  align="center"> </el-table-column>
+        <el-table-column label="空气温度" prop="air_temperature"  align="center"> </el-table-column> 
+        <el-table-column label="空气湿度" prop="air_humidity"  align="center"> </el-table-column>
+        <el-table-column label="光照度" prop="illuminance"  align="center"> </el-table-column>
+        <el-table-column label="土壤温度" prop="soil_temperature"  align="center"> </el-table-column>
+        <el-table-column label="土壤湿度" prop="soil_humidity"  align="center"> </el-table-column>
+        <el-table-column label="二氧化碳浓度" prop="co2" width="150"  align="center"> </el-table-column>
+      </el-table>
+    </div>
       <div class="environment-setting__header">
         <div class="header-item" :class="{ active: isActive === 1 }" @click="handleFoldWeather">
           <span class="header-item__key">天气：</span>
@@ -22,7 +52,7 @@
 
         <div class="header-item" :class="{ active: isActive === 3 }" @click="handleFoldTime">
           <span class="header-item__key">时间：</span>
-          <span class="header-item__value">15:20:40</span>
+          <span class="header-item__value">{{time(current_time)}}</span>
           <SvgIcon svg-name="fold" :size="16"></SvgIcon>
         </div>
       </div>
@@ -179,7 +209,7 @@
 
 <script >
 import * as echarts from 'echarts';
-
+import axios from 'axios';
 export default {
   name: 'GreenHouse',
   props: {
@@ -188,6 +218,7 @@ export default {
   data() {
     return {
       count: 0,
+      current_time:new Date(),
       weatherList: [
         { name: 'sun', text: '晴天' },
         { name: 'cloudy', text: '阴天' },
@@ -207,9 +238,27 @@ export default {
       isClosed: true,
       isActive: 0,
       lightColor: '',
+         tableData: [
+        {
+          id: '',
+          username: '',
+          area: '',
+          status: '',
+          startTime: '',
+          air_temperature: '',
+          air_humidity: '',
+          soil_temperature: '',
+          soil_humidity: '',
+          co2: '',
+         illuminance: ""
+        },
+       
+      ],
     };
   },
   mounted() {
+    this.getFieldInfo();
+
     this.drawTemperature();
   },
   methods: {
@@ -229,6 +278,10 @@ export default {
       this.isActive = 3;
 
       this.isClosed = false;
+    },
+    time(time = + new Date()) {
+      var date = new Date(time + 8 * 3600 * 1000); // 增加8小时
+      return (date.toJSON() || "").slice(0, 19).replace("T", " ");
     },
     handleClose() {
       this.isClosed = true;
@@ -361,6 +414,16 @@ export default {
       }, 2000);
       option && myChart.setOption(option);
     },
+      getFieldInfo() {
+      axios.get('/webdapeng_war/field-list').then((res) => {
+        console.log('field_list',res);
+        this.tableData=res.data.extend.pageInfo.list;
+        
+
+        
+   console.log('tableData',this.tableData);
+      })
+    },
     // drawDiagram() {
     //   var $ = go.GraphObject.make;
     //   var myDiagramDiv = $(go.Diagram, 'myDiagramDiv');
@@ -397,7 +460,7 @@ export default {
   }
   .environment-setting {
     &__header {
-      width: 470px;
+      width: 552px;
       height: 36px;
       background: #1f1f1f;
       box-shadow: 0px 12px 48px 16px rgba(0, 0, 0, 0.12), 0px 9px 28px 0px rgba(0, 0, 0, 0.2), 0px 6px 16px -8px rgba(0, 0, 0, 0.32);
@@ -408,7 +471,7 @@ export default {
     &__content {
       margin-top: 4px;
       padding-bottom: 16px;
-      width: 470px;
+      width: 552px;
       // height: 288px;
       background: #1f1f1f;
       box-shadow: 0px 12px 48px 16px rgba(0, 0, 0, 0.12), 0px 9px 28px 0px rgba(0, 0, 0, 0.2), 0px 6px 16px -8px rgba(0, 0, 0, 0.32);
@@ -577,4 +640,9 @@ export default {
   height: 150px;
   background-color: #ffff;
 }
+.agriculture-table {
+    width: 1000px;
+    margin: 0 auto;
+    height: 100%;
+  }
 </style>

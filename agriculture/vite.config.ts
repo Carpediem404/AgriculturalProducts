@@ -25,29 +25,15 @@ export default defineConfig({
     hmr: { overlay: false },
 
     proxy: {
-      '/api': {
-        // target: 'https://blog.csdn.net/weixin_45292658',
-        // target: 'http://10.37.0.213:30118/',
-
-        // target: 'http://10.37.0.213:30118/',
-        target: 'http://124.16.138.126:20009/',
-        // target: 'http://192.168.22.4:8901/',
-        // target: 'http://10.37.0.213:30119/ ',
+      
+      '/webdapeng_war': {
+        target: 'http://1.15.42.14:8188/',
         changeOrigin: true,
         secure: false,
         ws: true,
         // rewrite: (path: string) => path.replace(/^\/api/, ''),
       },
-      '/media': {
-        // target: 'https://blog.csdn.net/weixin_45292658',
-        // target: 'http://10.37.0.213:30118/',
-        // target: 'http://10.37.0.213:30119/',
-        // target: 'http://192.168.11.111:8800/',
-        target: 'http://124.16.138.126:20008/',
-        changeOrigin: true,
-        secure: false,
-        // rewrite: (path: string) => path.replace(/^\/api/, ''),
-      },
+     
     },
   },
 });

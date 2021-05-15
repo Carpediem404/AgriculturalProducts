@@ -24,8 +24,8 @@ request.interceptors.response.use(
     // Do something with response data
     if (response?.data?.code === 200) {
       const data = response?.data;
-      if (Array.isArray(data?.data?.result)) {
-        data.data.result = handleListData(data.data.result);
+      if (Array.isArray(data?.data?.extend)) {
+        data.data.extend = handleListData(data.data.extend);
         return Promise.resolve(data);
       }
       console.log(data);

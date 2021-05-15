@@ -1,23 +1,31 @@
 <template>
   <div class="agriculture">
+   
     <div class="agriculture-table">
-      <el-table :data="tableData" style="width: 1000px">
-        <el-table-column type="expand">
+      <el-table :data="plantList" style="width: 1000px">
+        <!-- <el-table-column type="expand">
           <template #default="scope">
             <div class="expand-block__title">温度仪表盘</div>
-            <!-- <WeatherPanel></WeatherPanel> -->
-            <!-- <div ref="weather" style="width: 200px; height: 200px"></div> -->
+           
+          </template>
+        </el-table-column> -->
+        <el-table-column label="农产品 ID" prop="id"  align="center">
+          <template #default="scope">
+            {{scope.row.id}}
+          </template>
+           </el-table-column>
+        <el-table-column label="大棚ID" prop="fid"  align="center"> </el-table-column>
+        <el-table-column label="农作物名称" prop="cname" width="180"  align="center"> 
+           <template #default="scope">
+            {{scope.row.fid}}
           </template>
         </el-table-column>
-        <el-table-column label="农产品 ID" prop="id"> </el-table-column>
-        <el-table-column label="农产品名称" prop="name"> </el-table-column>
-        <el-table-column label="日期" prop="desc"> </el-table-column>
-        <el-table-column label="负责人" prop="desc"> </el-table-column>
-        <el-table-column label="空气温度" prop="air_temperature"> </el-table-column> <el-table-column label="空气湿度" prop="air_humidity"> </el-table-column>
-        <el-table-column label="光照度" prop="lighting"> </el-table-column>
-        <el-table-column label="土壤温度" prop="soil_temperature"> </el-table-column>
-        <el-table-column label="土壤湿度" prop="soil_humidity"> </el-table-column>
-        <el-table-column label="二氧化碳浓度" prop="co2"> </el-table-column>
+        <!-- <el-table-column label="状态" prop="status"> </el-table-column> -->
+        <el-table-column label="种植数量" prop="quantity"  align="center"> </el-table-column>
+        <el-table-column label="种植时长" prop="time"  align="center"> </el-table-column> 
+        <el-table-column label="总利润" prop="total"  align="center"> </el-table-column>
+        <el-table-column label="农作物单株利润" prop="cprofit"  align="center"> </el-table-column>
+        
       </el-table>
     </div>
     <div class="divide-line"></div>
@@ -45,8 +53,9 @@
 <script>
 // import LineChart from "@/components/LineChart.vue";
 import * as echarts from 'echarts';
+import axios from 'axios';
 // import WeatherPanel from '@/components/WeatherPanel.vue';
-
+// import { getPlantList,getFieldList } from '@/services/task';
 export default {
   name: 'Agriculture',
   // components: { WeatherPanel },
@@ -55,64 +64,55 @@ export default {
       isOpen: false,
       tableData: [
         {
-          id: '12987122',
-          name: '粮食',
-          category: '江浙小吃、小吃零食',
-          desc: '品种一号玉米',
-          air_temperature: '22°',
-          air_humidity: '33°',
-          soil_temperature: '28°',
-          soil_humidity: '26°',
-          co2: '26%',
-          lighting: '66°',
+          id: '',
+          username: '',
+          area: '',
+          status: '',
+          startTime: '',
+          air_temperature: '',
+          air_humidity: '',
+          soil_temperature: '',
+          soil_humidity: '',
+          co2: '',
+         illuminance: ""
         },
-        {
-          id: '12987122',
-          name: '园艺植物 ',
-          category: '江浙小吃、小吃零食',
-          desc: '可作副食的草本、木本植物的总称',
-          air_temperature: '22°',
-          air_humidity: '33°',
-          soil_temperature: '28°',
-          soil_humidity: '26°',
-          co2: '26%',
-          lighting: '67°',
-        },
-        {
-          id: '12987122',
-          name: '油料植物',
-          category: '江浙小吃、小吃零食',
-          desc: '用作榨取油脂的各种植物',
-          air_temperature: '22°',
-          air_humidity: '33°',
-          soil_temperature: '28°',
-          soil_humidity: '26°',
-          co2: '26%',
-          lighting: '66°',
-        },
-        {
-          id: '12987122',
-          name: '药用植物',
-          category: '江浙小吃、小吃零食',
-          desc: '用作中药原药的各种植物',
-          air_temperature: '22°',
-          air_humidity: '33°',
-          soil_temperature: '28°',
-          soil_humidity: '26°',
-          co2: '26%',
-          lighting: '66°',
-        },
+       
       ],
+      plantList:[{
+        id:0,
+        fid:0,
+        cname:'',
+        cprofit:'',
+        quantity: 30,
+status: true,
+time: 3,
+total: 0.108,
+        
+      }],
     };
   },
   mounted() {
-    // this.$nextTick(() => {
+    
+    this.getPlantInfo();
     this.drawWeather();
-    // });
+  
     this.drawCO2();
     this.drawTemperature();
   },
   methods: {
+    getPlantInfo() {
+      axios.get('/webdapeng_war/plant-list').then((res) => {
+        console.log('plantListres',res);
+        this.plantList = res.data.extend.pageInfo.list;
+        console.log('plantList',this.plantList)
+      
+      });
+    },
+  
+      time(time = +new Date()) {
+      var date = new Date(time + 8 * 3600 * 1000); // 增加8小时
+      return (date.toJSON() || "").slice(0, 19).replace("T", " ");
+    },
     drawWeather() {
       this.isOpen = true;
 

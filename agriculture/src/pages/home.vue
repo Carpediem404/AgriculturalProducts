@@ -11,7 +11,7 @@
         <router-link class="h-header__navItem" to="/device-manage"><SvgIcon svg-name="renyuanguanli2" :width="20" :height="20" style="margin-right: 8px"></SvgIcon>设备管理</router-link>
         <router-link class="h-header__navItem" to="/plants-manage"><SvgIcon svg-name="Plant-Care1" :width="16" :height="16" style="margin-right: 8px"></SvgIcon>监测虫情</router-link>
       </div>
-      <div class="h-header__right">
+      <!-- <div class="h-header__right">
         <div class="h-header__group">
           <SvgIcon svg-name="fuwu1" :width="16" :height="16"></SvgIcon>
           <span>服务支持</span>
@@ -31,7 +31,7 @@
             <div class="h-header__popupItem">退出登录</div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
     <router-view v-slot="{ Component }">
       <transition :name="transitionName">
