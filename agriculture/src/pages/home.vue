@@ -5,8 +5,8 @@
       <SvgIcon svg-name="plant1" :wi1dth="31" :height="31" style="margin-left: 8px"></SvgIcon>
       <span class="h-header__name"> 农产品大棚管理系统 </span>
       <div class="h-header__nav">
-        <router-link class="h-header__navItem" to="/green-house"><SvgIcon svg-name="greenhouse" :width="16" :height="16" style="margin-right: 8px"></SvgIcon>大棚信息管理</router-link>
-        <router-link class="h-header__navItem" to="/agriculture-manage"><SvgIcon svg-name="agriculture3" :width="16" :height="16" style="margin-right: 8px"></SvgIcon>农产品信息管理</router-link>
+        <router-link class="h-header__navItem" to="/green-house"><SvgIcon svg-name="greenhouse" :width="16" :height="16" style="margin-right: 8px"></SvgIcon>首页</router-link>
+        <router-link class="h-header__navItem" to="/agriculture-manage"><SvgIcon svg-name="agriculture3" :width="16" :height="16" style="margin-right: 8px"></SvgIcon>农产品大棚信息</router-link>
 
         <router-link class="h-header__navItem" to="/device-manage"><SvgIcon svg-name="renyuanguanli2" :width="20" :height="20" style="margin-right: 8px"></SvgIcon>设备管理</router-link>
         <router-link class="h-header__navItem" to="/insect-detection"><SvgIcon svg-name="Plant-Care1" :width="16" :height="16" style="margin-right: 8px"></SvgIcon>监测虫情</router-link>

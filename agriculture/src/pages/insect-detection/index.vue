@@ -56,16 +56,18 @@
 <script>
 import axios from 'axios';
 
-import detection1 from '@/common/img/insect_detection.jpg';
-import detection2 from '@/common/img/insect_detection1.jpg';
-import detection3 from '@/common/img/insect_detection2.jpg';
-import detection4 from '@/common/img/insect_detection3.jpg';
+import detection1 from '@/common/img/ganju.jpg';
+import detection2 from '@/common/img/insect_detection.jpg';
+import detection3 from '@/common/img/apple.jpg';
+import detection4 from '@/common/img/putao.jpg';
+import detection5 from '@/common/img/xiaomai.jpg';
+import detection6 from '@/common/img/rice.jpg';
 
 export default {
   name: 'InsectDetection',
   data() {
     return {
-      imgs: [detection1, detection2, detection3, detection4,detection4,detection4],
+      imgs: [detection1, detection2, detection3, detection4,detection5,detection6],
       result: [],
       score:[],
     };
@@ -134,6 +136,14 @@ export default {
 
       });
     },
+    dataURLtoFile(dataurl, filename) {
+    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while(n--){
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, {type:mime});
+}
   },
   setup() {},
 };

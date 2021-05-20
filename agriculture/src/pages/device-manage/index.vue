@@ -6,10 +6,10 @@
     <div class="search-block">
       <el-form :inline="true" :model="formInline" class="taskForm">
         <el-form-item label="设备状态" style="">
-          <el-select v-model="formInline.status" placeholder="请选择设备状态" @change="handleFormChange(page)">
+          <el-select v-model="formInline.status" placeholder="请选择设备状态" @change="getDeviceStatus(formInline.status)">
             <el-option label="全部" value="ALL"></el-option>
-            <el-option label="运行中" value="RUNNING"></el-option>
-            <el-option label="未使用" value="UNFINISHED"></el-option>
+            <el-option label="运行中" value="使用中"></el-option>
+            <el-option label="未使用" value="未启用"></el-option>
             <el-option label="维修中" value="FIXING"></el-option>
             <el-option label="已磨损" value="BROKEN"></el-option>
           </el-select>
@@ -43,34 +43,39 @@
       <div class="data-statistics">
         <div class="data-statistics__name">数据统计</div>
         <div class="divide-line"></div>
-        <!-- <div class="data-statistics__charts">
-          <div id="calendar-pie" style="width: 100%; height: 400px"></div>
-        </div> -->
-        <div class="data-statistics__charts">
-          <!-- <ColumnChart :xDatas="adv_datas" :yDatas="defense_acc"></ColumnChart> -->
-          <!-- <div id="calendar-pie" style="width: 400px; height: 400px"></div> -->
-          <div id="column-chart" style="width: 100%; height: 400px"></div>
-        </div>
-        <!-- <CalendarPie></CalendarPie> -->
+        <div class="device-chart">
+   <sinan ></sinan>
+      <pyramid class="pyramidWrap" />
       </div>
-
-      <div class="device-detail__name"></div>
+   
+      </div>
+        
+  
+    
+    
     </div>
   </div>
 </template>
 <script>
 // import ColumnChart from '@/components/ColumnChart.vue';
 // import CalendarPie from '@/components/CalendarPie.vue';
+// import DeviceChart from '../green-house/index.vue';
+import sinan from '@/components/sinan.vue';
+import pyramid from '@/components/pyramid.vue';
 import * as echarts from 'echarts';
 import axios from 'axios';
 export default {
   name: 'Decive',
-  component: {},
+   props: {
+    msg: { type: String, default: '' },
+  },
+  components: { sinan,  pyramid, },
+  // component: {DeviceChart},
   data() {
     return {
       isReceive: true,
       formInline: {
-        status: '',
+        status: '使用中',
 
         keyword: '',
       },
@@ -113,7 +118,7 @@ export default {
   mounted() {
     this.getDeviceList();
     // this.drawCalendar();
-    this.drawColumn();
+    // this.drawColumn();
   },
   methods: {
     getDeviceList(){
@@ -123,6 +128,13 @@ export default {
         this.deviceList=res?.data?.extend?.devices||{};
         console.log('deviceList',this.deviceList)
 
+      })
+    },
+    getDeviceStatus(status){
+      axios.get(`webdapeng_war/device?status=${status}`).then((res) => {
+        console.log('deviceStatus',res)
+        //  this.deviceList=res?.data?.extend?.devices||{};
+        this.getDeviceList();
       })
     },
     getVirtulData() {
@@ -289,13 +301,39 @@ export default {
 
       option && chart.setOption(option);
     },
+    handleMetricClicked(item) {
+      this.activeIndex = item;
+    },
+    handleFoldWeather() {
+      this.isActive = 1;
+      this.isClosed = false;
+    },
+    handleFoldLighting() {
+      this.isActive = 2;
+
+      this.isClosed = false;
+    },
+    handleFoldTime() {
+      this.isActive = 3;
+
+      this.isClosed = false;
+    },
+  
+    handleClose() {
+      this.isClosed = true;
+      this.isActive = 0;
+    },
+   
+   
   },
 };
 </script>
 <style  lang="scss">
 .device-manage {
   padding: 70px 20px;
-  height: 100%;
+  height: 120vh;
+  overflow: hidden;
+    min-height: 100vh;
   background-color: rgba(31, 31, 31, 0.9);
   //   background-image: url('./assets/imgs/bg.jpg');
   //   background-size: cover;
@@ -344,5 +382,197 @@ export default {
   .el-table th {
     padding: 0;
   }
+
+.pyramidTrendChart {
+  // background-image: url(../../assets/img/bj.jpg);
+  min-width: auto;
+  width: 1920px;
+  min-height: auto;
+  height: 1080px;
+  margin-top: 2180px;
+  overflow: auto;
 }
+.environment {
+  position: relative;
+//   left: 0px;
+//   top: 50px;
+
+  background-color: rgba(0, 0, 0, 0.3);
+  // height: 100%;
+  // background-image: url(../../assets/img/bj.jpg);
+  min-width: auto;
+  width: 1920px;
+  min-height: auto;
+  height: 100%;
+  overflow: auto;
+  background-size: cover;
+  .pyramidWrap {
+    margin-left: 700px;
+  }
+  .bar {
+    color: #fff;
+    background: #1f1f1f;
+    box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.64), 0 3px 6px 0 rgba(0, 0, 0, 0.48), 0 5px 12px 4px rgba(0, 0, 0, 0.36);
+    border-radius: 8px;
+    width: 344px;
+    height: 56px;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  
+
+  .vertical-line {
+    margin: auto 16px;
+    color: rgba(255, 255, 255, 0.15);
+  }
+  .content-item {
+    height: 46px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.85);
+    display: flex;
+    justify-content: space-between;
+    line-height: 22px;
+    align-items: center;
+
+    margin: 0 16px;
+    .icon {
+      cursor: pointer;
+    }
+    &__detail {
+      display: flex;
+      padding: 16px;
+    }
+    &__button {
+      text-align: center;
+
+      .el-button {
+        // margin-left: 8px;
+        // width: 65px;
+        height: 32px;
+        min-width: 60px !important;
+        font-size: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+    }
+  }
+  .detail-left {
+    border-right: 1px solid rgba(255, 255, 255, 0.12);
+    // height: 190px;
+
+    &__item {
+      width: 122px;
+      height: 40px;
+      display: flex;
+
+      font-weight: 400;
+      // justify-content: center;
+      padding-left: 16px;
+      align-items: center;
+      color: rgba(255, 255, 255, 0.85);
+      // &:hover {
+      //   background: rgba(17, 29, 44, 1);
+
+      //   border-right: 2px solid rgba(23, 125, 220, 1);
+
+      // }
+      &.active {
+        background: #111d2c;
+        border-right: 1px solid rgba(23, 125, 220, 1);
+        color: rgba(23, 125, 220, 1);
+      }
+    }
+    &__value {
+      font-size: 14px;
+      font-weight: 400;
+      margin-left: 8px;
+    }
+  }
+  .detail-right {
+    padding-left: 24px;
+    .params {
+      display: flex;
+
+      &__form {
+        display: flex;
+        margin-bottom: 24px;
+        padding: 0 20px;
+
+        &Item {
+          display: flex;
+          align-items: center;
+          margin-right: 10px;
+          padding-bottom: 8px;
+          position: relative;
+        }
+        &Label {
+          display: inline;
+          // padding-left: 8px;
+          width: 72px;
+          font-size: 14px;
+          white-space: nowrap;
+          text-align: right;
+          font-weight: 400;
+          color: rgba(255, 255, 255, 0.65);
+        }
+        &Input {
+          .el-select {
+            width: 190px;
+          }
+        }
+        &Unit {
+          margin-left: 8px;
+          color: rgba(255, 255, 255, 0.65);
+          font-size: 14px;
+        }
+        &Du {
+          color: rgba(255, 255, 255, 0.65);
+          font-size: 14px;
+          position: absolute;
+          top: -1px;
+          left: 258px;
+        }
+      }
+    }
+  }
+  .params-time {
+    &__item {
+      display: flex;
+      align-items: center;
+    }
+    &__input {
+      .el-input-number {
+        width: 118px !important;
+      }
+    }
+    &__unit {
+      padding: 0 8px;
+
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.65);
+    }
+  }
+}
+
+.myDiagramDiv {
+  width: 400px;
+  height: 150px;
+  background-color: #ffff;
+}
+.agriculture-table {
+  width: 1000px;
+  margin: 0 auto;
+  height: 100%;
+}
+.device-chart{
+  position: absolute;
+  top:450px;
+  left:200px;
+}
+}
+
 </style>

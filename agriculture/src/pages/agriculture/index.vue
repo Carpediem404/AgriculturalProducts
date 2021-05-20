@@ -1,51 +1,97 @@
 <template>
   <div class="agriculture">
-   
+    <div class="data-statistics__name" style="margin-top:20px">农产品数据统计</div>
+
     <div class="agriculture-table">
-      <el-table :data="plantList" style="width: 1000px">
+      <el-table :data="plantList" style="width: 100%">
         <!-- <el-table-column type="expand">
           <template #default="scope">
             <div class="expand-block__title">温度仪表盘</div>
            
           </template>
         </el-table-column> -->
-        <el-table-column label="农产品 ID" prop="id"  align="center">
+        <el-table-column label="农产品 ID" prop="id" align="center">
           <template #default="scope">
-            {{scope.row.id}}
+            {{ scope.row.id }}
           </template>
-           </el-table-column>
-        <el-table-column label="大棚ID" prop="fid"  align="center"> </el-table-column>
-        <el-table-column label="农作物名称" prop="cname" width="180"  align="center"> 
-           <template #default="scope">
-            {{scope.row.cname}}
+        </el-table-column>
+        <el-table-column label="大棚ID" prop="fid" align="center"> </el-table-column>
+        <el-table-column label="农作物名称" prop="cname" width="180" align="center">
+          <template #default="scope">
+            {{ scope.row.cname }}
           </template>
         </el-table-column>
         <!-- <el-table-column label="状态" prop="status"> </el-table-column> -->
-        <el-table-column label="种植数量" prop="quantity"  align="center"> </el-table-column>
-        <el-table-column label="种植时长" prop="time"  align="center"> </el-table-column> 
-        <el-table-column label="总利润" prop="total"  align="center"> </el-table-column>
-        <el-table-column label="农作物单株利润" prop="cprofit"  align="center"> </el-table-column>
-        
+        <el-table-column label="种植数量" prop="quantity" align="center"> </el-table-column>
+        <el-table-column label="种植时长" prop="time" align="center"> </el-table-column>
+        <el-table-column label="总利润" prop="total" align="center"> </el-table-column>
+        <el-table-column label="农作物单株利润" prop="cprofit" align="center"> </el-table-column>
       </el-table>
     </div>
+
     <div class="divide-line"></div>
-    
-    
-   <div class="device-detail">
+
+    <div class="device-detail">
       <div class="data-statistics">
-        <div class="data-statistics__name">数据统计</div>
-        
-        
         <div class="data-statistics__charts">
-        
           <div id="column-chart" style="width: 100%; height: 400px"></div>
         </div>
       </div>
 
       <div class="device-detail__name"></div>
     </div>
-  
+    <div class="divide-line"></div>
+    <div class="data-statistics__name">大棚数据统计</div>
 
+    <div class="agriculture-table">
+      <el-table :data="tableData" style="width: 100%" @expand-change="handleExpand">
+        <el-table-column type="expand">
+          <template #default="scope">
+        
+        <div class="expand-info">
+ <div class="chart-block">
+                <div class="charts-name">土壤/CO2仪表盘</div>
+                <div ref="CO2" :id='`CO2_${scope.row.id}`' style="width:500px; height: 500px"></div>
+              </div>
+              <div class="chart-block">
+                <div class="charts-name">土壤/CO2仪表盘</div>
+                <div  :id='`weather_${scope.row.id}`' style="width: 500px; height: 500px"></div>
+              </div>
+              <div class="chart-block">
+                <div class="charts-name">空气/光照仪表盘</div>
+                <div :id='`tem_${scope.row.id}`' style="width: 500px; height: 500px"></div>
+              </div>
+        </div>
+
+            
+             
+          
+          </template>
+        </el-table-column>
+        <el-table-column label="大棚ID" prop="id" align="center">
+          <template #default="scope">
+            {{ scope.row.id }}
+          </template>
+        </el-table-column>
+        <el-table-column label="负责人" prop="username" align="center"> </el-table-column>
+        <el-table-column label="时间" prop="startTime" width="180" align="center">
+          <template #default="scope">
+            {{ time(scope.row.startTime) }}
+          </template>
+        </el-table-column>
+        <!-- <el-table-column label="状态" prop="status"> </el-table-column> -->
+        <el-table-column label="面积" prop="area" align="center"> </el-table-column>
+        <el-table-column label="空气温度" prop="air_temperature" align="center"> </el-table-column>
+        <el-table-column label="空气湿度" prop="air_humidity" align="center"> </el-table-column>
+        <el-table-column label="光照度" prop="illuminance" align="center"> </el-table-column>
+        <el-table-column label="土壤温度" prop="soil_temperature" align="center"> </el-table-column>
+        <el-table-column label="土壤湿度" prop="soil_humidity" align="center"> </el-table-column>
+        <el-table-column label="二氧化碳浓度" prop="co2" width="150" align="center"> </el-table-column>
+      </el-table>
+    </div>
+    <!-- <div class="divide-line"></div> -->
+
+   
   </div>
 </template>
 
@@ -61,62 +107,91 @@ export default {
   data() {
     return {
       isOpen: false,
-    
-      plantList:[{
-        id:0,
-        fid:0,
-        cname:'',
-        cprofit:'',
-        quantity: 30,
-status: true,
-time: 3,
-total: 0.108,
-        
-      }],
-       source: [
-            ['product', '2015', '2016', '2017'],
-            ['Matcha Latte', 43.3, 85.8, 93.7],
-            ['Milk Tea', 83.1, 73.4, 55.1],
-            ['Cheese Cocoa', 86.4, 65.2, 82.5],
-            ['Walnut Brownie', 72.4, 53.9, 39.1],
-          ],
+      tableData: [
+        {
+          id: '',
+          username: '',
+          area: '',
+          status: '',
+          startTime: '',
+          air_temperature: '',
+          air_humidity: '',
+          soil_temperature: '',
+          soil_humidity: '',
+          co2: '',
+          illuminance: '',
+        },
+      ],
+      plantList: [
+        {
+          id: 0,
+          fid: 0,
+          cname: '',
+          cprofit: '',
+          quantity: 30,
+          status: true,
+          time: 3,
+          total: 0.108,
+        },
+      ],
+
+      sourceList: [],
     };
   },
   mounted() {
-    
     this.getPlantInfo();
-    
+    this.getFieldInfo();
 
     // this.drawWeather();
-  
+    // this. drawColumn();
     // this.drawCO2();
     // this.drawTemperature();
   },
   methods: {
     getPlantInfo() {
       axios.get('/webdapeng_war/plant-list').then((res) => {
-        console.log('plantListres',res);
+        console.log('plantListres', res);
         this.plantList = res.data.extend.pageInfo.list;
-        console.log('plantList',this.plantList)
-        this.sourceList=this.plantList.map((item)=>{
-              
-              return [item.cname,item.time,item.quantity,item.cprofit,item.total]
-        })
-        this.sourceList.unshift(['农作物名称','种植时长','种植数量','单株利润','总利润'])
-        console.log('sourceList',this.sourceList)
+        console.log('plantList', this.plantList);
+        this.sourceList = this.plantList.map((item) => {
+          return [item.cname, item.time, item.quantity, item.cprofit, item.total];
+        });
+        this.sourceList.unshift(['农作物名称', '种植时长', '种植数量', '单株利润', '总利润']);
+        console.log('sourceList', this.sourceList);
         this.drawColumn();
       });
     },
-  
+    handleExpand(row) {
+      console.log('handleExpand', row);
+      // var id=row.id
+      // var myChart = echarts.init(document.getElementById('CO2_0'));
+      setTimeout(()=>{
+
+        // console.log(document.getElementById('CO2_0'))
+      this.drawCO2(`CO2_${row.id}`);
+this.drawWeather(`weather_${row.id}`);
+      this.drawTemperature(`tem_${row.id}`);
+      },100)
+    },
+    getFieldInfo() {
+      axios.get('/webdapeng_war/field-list').then((res) => {
+        console.log('field_list', res);
+        this.tableData = res.data.extend.pageInfo.list;
+
+        console.log('tableData', this.tableData);
+      });
+    },
     time(time = +new Date()) {
       var date = new Date(time + 8 * 3600 * 1000); // 增加8小时
-      return (date.toJSON() || "").slice(0, 19).replace("T", " ");
+      return (date.toJSON() || '').slice(0, 19).replace('T', ' ');
     },
-    drawWeather() {
+    drawWeather(id) {
       this.isOpen = true;
 
       // var myChart = echarts.init(document.getElementsByClassName('weather'));
-      var myChart = echarts.init(this.$refs['weather']);
+      // var myChart = echarts.init(this.$refs['weather']);
+      var myChart = echarts.init(document.getElementById(id));
+
       let option = {
         series: [
           {
@@ -201,11 +276,11 @@ total: 0.108,
       }, 2000);
       option && myChart.setOption(option);
     },
-    drawCO2() {
+    drawCO2(id) {
       // this.isOpen = true;
-
       // var myChart = echarts.init(document.getElementsByClassName('weather'));
-      var myChart = echarts.init(this.$refs['CO2']);
+
+      var myChart = echarts.init(document.getElementById(id));
       let option = {
         series: [
           {
@@ -290,11 +365,13 @@ total: 0.108,
       }, 2000);
       option && myChart.setOption(option);
     },
-    drawTemperature() {
+    drawTemperature(id) {
       // this.isOpen = true;
 
       // var myChart = echarts.init(document.getElementsByClassName('weather'));
-      var myChart = echarts.init(this.$refs['temperature']);
+      // var myChart = echarts.init(this.$refs['temperature']);
+      var myChart = echarts.init(document.getElementById(id));
+
       let option = {
         series: [
           {
@@ -417,14 +494,14 @@ total: 0.108,
       }, 2000);
       option && myChart.setOption(option);
     },
-       drawColumn() {
+    drawColumn() {
       //   var chart = echarts.init(this.$refs['columnChart']);
       var chart = echarts.init(document.getElementById('column-chart'));
       let option = {
         legend: { textStyle: { color: 'rgba(255, 255, 255, 0.65)' } },
         tooltip: {},
         dataset: {
-          source: this.sourceList
+          source: this.sourceList,
         },
         xAxis: {
           type: 'category',
@@ -459,7 +536,7 @@ total: 0.108,
           },
           { type: 'bar' },
           { type: 'bar' },
-              { type: 'bar' },
+          { type: 'bar' },
         ],
       };
 
@@ -481,7 +558,7 @@ total: 0.108,
     background-color: rgba(255, 255, 255, 0);
   }
   .agriculture-table {
-    width: 1000px;
+    width: 100%;
     margin: 0 auto;
     height: 100%;
   }
@@ -501,13 +578,14 @@ total: 0.108,
     text-align: center;
   }
   .charts-block {
+   
     &__name {
       color: rgba(255, 255, 255, 0.65);
       font-size: 18px;
       padding-bottom: 20px;
     }
   }
-   .data-statistics {
+  .data-statistics {
     margin: 40px 0;
     &__name {
       color: rgba(255, 255, 255, 0.65);
@@ -518,5 +596,12 @@ total: 0.108,
       margin-top: 20px;
     }
   }
+  .expand-info{
+    display: flex;
+    justify-content:space-around;
+  }
+  // .chart-block{
+
+  // }
 }
 </style>
