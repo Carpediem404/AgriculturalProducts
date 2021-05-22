@@ -10,6 +10,9 @@ vue3+vue-router+vuex
 公共组件：/src/components
 公共代码：/src/common
 全局数据store：/src/store
+## 运行
+npm run install
+npm run dev
 ## patch
 https://github.com/ds300/patch-package#readme
 

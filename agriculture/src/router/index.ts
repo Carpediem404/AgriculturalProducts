@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import Home from '../pages/home.vue';
-import GreenHouse from '../pages/green-house/index1.vue';
+import GreenHouse from '../pages/green-house/index2.vue';
 import Agriculture from '../pages/agriculture/index.vue';
 import Device from '../pages/device-manage/index.vue';
 import InsectDetection from '../pages/insect-detection/index.vue';

@@ -43,10 +43,13 @@
       <div class="data-statistics">
         <div class="data-statistics__name">数据统计</div>
         <div class="divide-line"></div>
-        <div class="device-chart">
+        <div style="height:1500px;">
+   <div class="device-chart">
    <sinan ></sinan>
       <pyramid class="pyramidWrap" />
       </div>
+        </div>
+     
    
       </div>
         
@@ -331,9 +334,9 @@ export default {
 <style  lang="scss">
 .device-manage {
   padding: 70px 20px;
-  height: 120vh;
-  overflow: hidden;
-    min-height: 100vh;
+  height: 1400px;
+  overflow: hidden !important;
+    // min-height: 100vh;
   background-color: rgba(31, 31, 31, 0.9);
   //   background-image: url('./assets/imgs/bg.jpg');
   //   background-size: cover;

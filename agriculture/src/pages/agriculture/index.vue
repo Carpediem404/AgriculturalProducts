@@ -603,5 +603,8 @@ this.drawWeather(`weather_${row.id}`);
   // .chart-block{
 
   // }
+  .el-table__expanded-cell{
+    padding:20px 0px !important;
+  }
 }
 </style>

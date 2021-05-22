@@ -138,7 +138,7 @@ export default {
 .trigle {
   // left: 600px;
   margin-top: 100px;
-  // margin-left:200px;
+  margin-left:600px;
   width: 720px;
   height: 500px;
   // position:relative;
@@ -418,7 +418,7 @@ export default {
     &.detail_2 {
       left: 430px;
       top: 194px;
-      width: 290px;
+      // width: 290px;
     }
     &.detail_3 {
       left: 67px;
